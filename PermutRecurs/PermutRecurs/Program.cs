@@ -40,11 +40,12 @@ namespace PermutForStr
             string[] a;
             if (lenRes == 1)
             {
-                for (int i = 0; i < str.Length; i++)
-                {
-                    r[count++] = outOneEl(str)[i];
-                }
-
+                var v = outOneEl(str);
+                r = concArr(ref r, v, ref count);
+                /* for (int i = 0; i < str.Length; i++)
+                 {
+                     r[count++] = outOneEl(str)[i];
+                 }*/
                 return r;
             }
 
@@ -52,13 +53,13 @@ namespace PermutForStr
             {
                 var s = remEl(str, i);
                 a = get_n_n(s, lenRes - 1);
-                for (int j = 0; j < a.Length; j++)
-                {
-                    r[count++] = concatStr(str[i], a)[j];
-                }
-
+                var v = concatStr(str[i], a);
+                r = concArr(ref r, v, ref count);
+                /* for (int j = 0; j < a.Length; j++)
+                 {
+                     r[count++] = v[j];
+                 }*/
             }
-
             return r;
         }
 
@@ -68,13 +69,26 @@ namespace PermutForStr
             var r = new string[factorial(str.Length) * str.Length];
             for (int i = str.Length; i > 0; i--)
             {
-                for (int j = 0; j < get_n_n(str, i).Length; j++)
-                {
-                    r[count++] = get_n_n(str, i)[j];
-                }
+                var v = get_n_n(str, i);
+                r = concArr(ref r, v, ref count);
+                //  r = concArr(r, v);
+                /*  for (int j = 0; j < v.Length; j++)
+                  {
+                      r[count++] = v[j];
+                  }*/
             }
             return r;
         }
+
+        public static string[] concArr(ref string[] a, string[] b, ref int count)
+        {
+            for (int j = 0; j < b.Length; j++)
+            {
+                a[count++] = b[j];
+            }
+            return a;
+        }
+
         public static int factorial(int num)
         {
             int a = 1;
