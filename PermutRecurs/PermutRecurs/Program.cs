@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace PermutForStr
 {
@@ -42,10 +43,6 @@ namespace PermutForStr
             {
                 var v = outOneEl(str);
                 r = concArr(ref r, v, ref count);
-                /* for (int i = 0; i < str.Length; i++)
-                 {
-                     r[count++] = outOneEl(str)[i];
-                 }*/
                 return r;
             }
 
@@ -55,10 +52,6 @@ namespace PermutForStr
                 a = get_n_n(s, lenRes - 1);
                 var v = concatStr(str[i], a);
                 r = concArr(ref r, v, ref count);
-                /* for (int j = 0; j < a.Length; j++)
-                 {
-                     r[count++] = v[j];
-                 }*/
             }
             return r;
         }
@@ -66,18 +59,15 @@ namespace PermutForStr
         public static string[] permutStr(string str)
         {
             var count = 0;
-            var r = new string[factorial(str.Length) * str.Length];
+            var l = factorial(str.Length);
+            var r = new string[l * str.Length];
             for (int i = str.Length; i > 0; i--)
             {
                 var v = get_n_n(str, i);
                 r = concArr(ref r, v, ref count);
-                //  r = concArr(r, v);
-                /*  for (int j = 0; j < v.Length; j++)
-                  {
-                      r[count++] = v[j];
-                  }*/
             }
-            return r;
+            var a = r.Distinct().ToArray();
+            return a;
         }
 
         public static string[] concArr(ref string[] a, string[] b, ref int count)
@@ -100,8 +90,9 @@ namespace PermutForStr
         }
         static void Main(string[] args)
         {
-            var r = permutStr("123");
-            // int i=  factorial(0);
+            var r = permutStr("12346");
+            //  string[] d = { "1", "2", "3","1" };
+            //  var o = delDublic(d);
         }
     }
 }
