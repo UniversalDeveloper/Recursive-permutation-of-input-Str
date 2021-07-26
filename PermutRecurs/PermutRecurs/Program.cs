@@ -36,16 +36,19 @@ namespace PermutForStr
 
         public static string[] get_n_n(string str, int lenRes)
         {
-            string[] r = new string[factorial(str.Length)];
+            if (str.Length<lenRes) throw new Exception("");
+            string[] r;
             int count = 0;
             string[] a;
             if (lenRes == 1)
             {
+                r = new string[str.Length];           
                 var v = outOneEl(str);
                 r = concArr(ref r, v, ref count);
                 return r;
             }
-
+           
+            r = new string[factorial(str.Length)];
             for (int i = 0; i < str.Length; i++)
             {
                 var s = remEl(str, i);
@@ -58,17 +61,34 @@ namespace PermutForStr
 
         public static string[] permutStr(string str)
         {
+            int c = 0;
+            if (str == null) throw new Exception("Enter the string");
             var count = 0;
             var l = factorial(str.Length);
             var r = new string[l * str.Length];
             for (int i = str.Length; i > 0; i--)
             {
                 var v = get_n_n(str, i);
+                 c = v.Length;
                 r = concArr(ref r, v, ref count);
             }
-            var a = r.Distinct().ToArray();
-            return a;
+           int o= c;
+          // var a = r.Distinct().ToArray();
+            return r;
         }
+       public static int countLen(string str)
+        {
+            int c = 0;
+            for (int i = str.Length; i > 0; i--)
+            {
+                var v = get_n_n(str, i);
+                c += v.Length;
+               
+            }
+          return c;
+
+        }
+
 
         public static string[] concArr(ref string[] a, string[] b, ref int count)
         {
@@ -90,7 +110,9 @@ namespace PermutForStr
         }
         static void Main(string[] args)
         {
-            var r = permutStr("12346");
+          //  var r = permutStr("1234");
+            var l = countLen("1234");
+            var p = 10;
             //  string[] d = { "1", "2", "3","1" };
             //  var o = delDublic(d);
         }
